@@ -8,6 +8,7 @@
         // utilidades
         var noop = function() {}; // simple no operation function
         var offloadFn = function(fn) { setTimeout(fn || noop, 0) }; // offload a functions execution
+        var self = this;
         
         // seteo de opciones customizadas
         this.defaults = {
@@ -22,8 +23,9 @@
             addEventListener: !!window.addEventListener,
             touch: ('ontouchstart' in window) || (window.DocumentTouch && document instanceof DocumentTouch) || window.navigator.msPointerEnabled,
             transitions: (function(temp) {
-                var props = ['transitionProperty', 'WebkitTransition', 'MozTransition', 'OTransition', 'msTransition'];
-                for (var i in props) { if (temp.style[ props[i] ] !== undefined) { return true; } }
+                var props = ['transitionProperty', 'WebkitTransition', 'MozTransition', 'OTransition', 'msTransition'],
+                    i;
+                for (i in props) { if (temp.style[ props[i] ] !== undefined) { return true; } }
                 return false;
             })(document.createElement('ninja'))
         };
@@ -32,6 +34,7 @@
         this.container = typeof( container ) === 'object' ? container : document.getElementById ( container );
         
         this.setup();
+        window.onresize = function(){ self.setup(); };
     };
     
     window.NinjaSlider.prototype = {
@@ -42,17 +45,22 @@
             this.slidesPos = new Array(this.slides.length);
             this.width = this.container.getBoundingClientRect().width || this.container.offsetWidth;
             
-            // se comienz a configurar el layout para el slider
+            // se comienza a configurar el layout para el slider
+            this.container.style.visibility = 'visible';
             this.slider.style.width = (this.slides.length * this.width) + 'px';
             
+            // se setean los estilos para los slides
             var pos = this.slides.length,
                 slide;
+        
             while( pos-- ){
                 slide = this.slides[ pos ];
                 
                 slide.style.width = this.width + 'px';
                 slide.setAttribute('data-index', pos);
             }
+            
+            
         },
         kill : function(){},
         mergeOptions: function(original, custom) {
@@ -67,6 +75,8 @@
             return original;
         }
     };
+    
+    document.addEventListener('DOMContentLoaded', function(){ var testSlider = new NinjaSlider('slider'); }, false);
     
     
 }(this, document));
