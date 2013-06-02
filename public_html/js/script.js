@@ -6,15 +6,14 @@
         if (!container) { return; }
         
         // utilidades
-        var noop = function() {}; // simple no operation function
-        var offloadFn = function(fn) { setTimeout(fn || noop, 0) }; // offload a functions execution
         var self = this;
         
         // seteo de opciones customizadas
         this.defaults = {
             startSlide : 0,
             speed : 300,
-            continuous : false
+            continuous : false,
+            stopPropagation : false
         };
         this.settings = this.mergeOptions( this.defaults, (options || {}) );
         
@@ -33,8 +32,14 @@
         this.currentIndex = parseInt(this.settings.startSlide, 10);
         this.container = typeof( container ) === 'object' ? container : document.getElementById ( container );
         
+        // se setean los elementos
         this.setup();
-        window.onresize = function(){ self.setup(); };
+        
+        // se manejan los eventos
+        this.listenEvents( 'listen' );
+        if( this.browserCheck.addEventListener ){ window.addEventListener('resize', function(){ setTimeout(function(){ self.setup(); }, 0); }, false); }
+        else { window.onresize = function(){ setTimeout(function(){ self.setup(); }, 0); }; }
+        
     };
     
     window.NinjaSlider.prototype = {
@@ -63,6 +68,70 @@
             
         },
         kill : function(){},
+        listenEvents : function( action ){
+            var self = this,
+                offloadFn = function(fn) { setTimeout(fn || function(){}, 0) };
+                events = {
+                    handleEvent: function(event) {
+                        switch (event.type) {
+                            case 'touchstart':
+                            case 'MSPointerDown':
+                                this.start(event);
+                                break;
+                            case 'touchmove':
+                            case 'MSPointerMove':
+                                this.move(event);
+                                break;
+                            case 'touchend':
+                            case 'MSPointerUp':
+                                offloadFn(this.end(event));
+                                break;
+                            case 'webkitTransitionEnd':
+                            case 'msTransitionEnd':
+                            case 'oTransitionEnd':
+                            case 'otransitionend':
+                            case 'transitionend':
+                                offloadFn(this.transitionEnd(event));
+                                break;
+                            case 'resize':
+                                offloadFn(self.setup.call());
+                                break;
+                        }
+
+                        if (self.settings.stopPropagation) { event.stopPropagation(); }
+                    },
+                    start : function( event ){},
+                    move : function( event ){},
+                    end : function( event ){},
+                    transitionEnd : function( event ){}
+                };
+                
+                if( action === 'listen' ){
+                    if ( self.browserCheck.touch ) {
+                        self.slider.addEventListener('touchstart', events, false);
+                        self.slider.addEventListener('MSPointerDown', events, false);
+                    }
+                    if ( self.browserCheck.transitions ) {
+                        self.slider.addEventListener('webkitTransitionEnd', events, false);
+                        self.slider.addEventListener('msTransitionEnd', events, false);
+                        self.slider.addEventListener('oTransitionEnd', events, false);
+                        self.slider.addEventListener('otransitionend', events, false);
+                        self.slider.addEventListener('transitionend', events, false);
+                    }
+                } else {
+                    if ( self.browserCheck.touch ) {
+                        self.slider.removeEventListener('touchstart', events, false);
+                        self.slider.removeEventListener('MSPointerDown', events, false);
+                    }
+                    if ( self.browserCheck.transitions ) {
+                        self.slider.removeEventListener('webkitTransitionEnd', events, false);
+                        self.slider.removeEventListener('msTransitionEnd', events, false);
+                        self.slider.removeEventListener('oTransitionEnd', events, false);
+                        self.slider.removeEventListener('otransitionend', events, false);
+                        self.slider.removeEventListener('transitionend', events, false);
+                    }
+                }
+        },
         mergeOptions: function(original, custom) {
             for (var p in custom) {
                 try {
