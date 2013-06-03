@@ -36,7 +36,7 @@
         this.setup();
         
         // se manejan los eventos
-        this.listenEvents( 'listen' );
+        this.eventsHandler( 'listen' );
         if( this.browserCheck.addEventListener ){ window.addEventListener('resize', function(){ setTimeout(function(){ self.setup(); }, 0); }, false); }
         else { window.onresize = function(){ setTimeout(function(){ self.setup(); }, 0); }; }
         
@@ -68,7 +68,7 @@
             
         },
         kill : function(){},
-        listenEvents : function( action ){
+        eventsHandler : function( action ){
             var self = this,
                 offloadFn = function(fn) { setTimeout(fn || function(){}, 0) };
                 events = {
@@ -92,9 +92,6 @@
                             case 'otransitionend':
                             case 'transitionend':
                                 offloadFn(this.transitionEnd(event));
-                                break;
-                            case 'resize':
-                                offloadFn(self.setup.call());
                                 break;
                         }
 
