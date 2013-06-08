@@ -140,8 +140,8 @@
                 var duration = +new Date - startPos.time;
                 // determine if slide attempt triggers next/prev slide
                 var isValidSlide = 
-                    Number(duration) < 250               // if slide duration is less than 250ms
-                    && Math.abs(delta.x) > 20            // and if slide amt is greater than 20px
+                    Number(duration) < 250                    // if slide duration is less than 250ms
+                    && Math.abs(delta.x) > 20                 // and if slide amt is greater than 20px
                     || Math.abs(delta.x) > self.width/2;      // or if slide amt is greater than half the width
 
                 // determine if slide attempt is past start and end
