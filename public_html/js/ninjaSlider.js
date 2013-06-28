@@ -1,4 +1,4 @@
-// comienza ninjaSlider
+// ninjaSlider, responsive slider plugin based on the work made by
 (function(window, document, undefined){
     "use strict";
     
@@ -13,6 +13,7 @@
         var self = this;
         
         // seteo de opciones customizadas
+
         this.defaults = {
             startSlide : 0,
             speed : 300,
@@ -36,9 +37,9 @@
                     i;
                 for (i in props) { if (temp.style[ props[i] ] !== undefined) { return true; } }
                 return false;
-            })(document.createElement('ninja'))
+            })(document.createElement('ninja')),
+            ie9mobile : (function(fake){ return 'msTransform' in fake.style || 'transform' in fake.style; }( document.createElement('ninja') ))
         };
-        
         this.currentIndex = parseInt(this.settings.startSlide, 10);
         this.container = typeof( container ) === 'object' ? container : document.getElementById ( container );
         
@@ -125,10 +126,15 @@
                         ( Math.abs(delta.x) / self.width + 1 )              // determine resistance level
                         : 1 );
 
+                        if( self.browserCheck.transitions ){
+                            self.translate(self.currentIndex -1, delta.x + self.slidesPos[ self.currentIndex -1 ] , 0);
+                            self.translate(self.currentIndex, delta.x + self.slidesPos[ self.currentIndex ] , 0);
+                            self.translate(self.currentIndex +1, delta.x + self.slidesPos[ self.currentIndex +1 ] , 0);
+                        } else {
+                            self.translate(self.currentIndex, delta.x - (self.currentIndex * self.width), 0);
+                        }
 
-                    self.translate(self.currentIndex -1, delta.x + self.slidesPos[ self.currentIndex -1 ] , 0);
-                    self.translate(self.currentIndex, delta.x + self.slidesPos[ self.currentIndex ] , 0);
-                    self.translate(self.currentIndex +1, delta.x + self.slidesPos[ self.currentIndex +1 ] , 0);
+                    
                     
                     if( self.settings.onInputMoveCallback ){ self.settings.onInputMoveCallback( self.slides[ self.currentIndex ], self.currentIndex ); }
                 }
@@ -150,31 +156,48 @@
                     || self.currentIndex == self.slides.length - 1 && delta.x < 0;    // or if last slide and slide amt is less than 0
 
                 // determine direction of swipe (true:right, false:left)
-                var direction = delta.x < 0;
-
+                var direction = delta.x < 0,
+                    calc;
+                    
                 // if not scrolling vertically
                 if (!isScrolling) {
                     if (isValidSlide && !isPastBounds){
                         if (direction) {
-                            self.move( self.currentIndex - 1, -self.width, 0);
-                            self.move( self.currentIndex, self.slidesPos[self.currentIndex] - self.width, self.settings.speed );
-                            self.move( self.currentIndex + 1, self.slidesPos[self.currentIndex + 1] - self.width, self.settings.speed );
-                            self.currentIndex += 1;
+                            if( self.browserCheck.transitions ){
+                                self.move( self.currentIndex - 1, -self.width, 0);
+                                self.move( self.currentIndex, self.slidesPos[self.currentIndex] - self.width, self.settings.speed );
+                                self.move( self.currentIndex + 1, self.slidesPos[self.currentIndex + 1] - self.width, self.settings.speed );
+                            } else {
+                                self.animate( delta.x - (self.currentIndex * self.width), (self.currentIndex + 1) * self.width * -1, self.settings.speed );
+                            
+                            }
+                            
+                            self.currentIndex++;
                         } else {
-                            self.move( self.currentIndex + 1, self.width, 0);
-                            self.move( self.currentIndex, self.slidesPos[self.currentIndex] + self.width, self.settings.speed );
-                            self.move( self.currentIndex - 1, self.slidesPos[self.currentIndex -1] + self.width, self.settings.speed );
-                            self.currentIndex += -1;
+                            if( self.browserCheck.transitions ){
+                                self.move( self.currentIndex + 1, self.width, 0);
+                                self.move( self.currentIndex, self.slidesPos[self.currentIndex] + self.width, self.settings.speed );
+                                self.move( self.currentIndex - 1, self.slidesPos[self.currentIndex -1] + self.width, self.settings.speed );
+                            } else {
+                                self.animate( delta.x - (self.currentIndex * self.width), (self.currentIndex === 0 ? self.currentIndex : self.currentIndex - 1) * self.width * -1, self.settings.speed );
+                            }
+                            
+                            self.currentIndex--;
 
                         }
                         
                         if( self.settings.transitionCallback ){ self.settings.transitionCallback( self.currentIndex, self.slides[ self.currentIndex ] ); }
                         
                     } else {
-                        self.move( self.currentIndex -1, -self.width, self.settings.speed);
-                        self.move( self.currentIndex, 0, self.settings.speed);
-                        self.move( self.currentIndex +1, self.width, self.settings.speed);
+                        if( self.browserCheck.transitions ){
+                            self.move( self.currentIndex -1, -self.width, self.settings.speed);
+                            self.move( self.currentIndex, 0, self.settings.speed);
+                            self.move( self.currentIndex +1, self.width, self.settings.speed);
+                        } else {
+                            self.animate( delta.x - (self.currentIndex * self.width), self.currentIndex * self.width * -1, self.settings.speed );
+                        }
                     }
+                    console.log(self.currentIndex);
                 }
 
                 self.slider.removeEventListener('touchmove', self.events, false);
@@ -185,7 +208,7 @@
                 self.slider.removeEventListener('mouseup', self.events, false);
             },
             transitionEnd : function( event ){
-                if (parseInt(event.target.getAttribute('data-index'), 10) === this.currentIndex && self.settings.transitionCallback) {
+                if (parseInt(event.target.getAttribute('data-index'), 10) === self.currentIndex && self.settings.transitionCallback) {
                     self.settings.transitionCallback( self.currentIndex, self.slides[ self.currentIndex ] );
                 }
             }
@@ -195,7 +218,7 @@
         this.setup();
         
         //si es autmatico se empieza
-        if( this.settings.auto ){ this.begin(); }
+        // if( this.settings.auto ){ this.begin(); }
         
         return {
             setup : function(){ self.setup(); },
@@ -210,38 +233,41 @@
         setup : function(){
             var self = this;
             // se setean los objetos iniciales como el slider y las slides y las cosas
-            this.slider = this.container.children[0];
-            this.slides = this.slider.children;
-            this.slidesPos = [ 0 ];
-            this.width = this.container.getBoundingClientRect().width || this.container.offsetWidth;
+            self.slider = self.container.children[0];
+            self.slides = self.slider.children;
+            self.slidesPos = [ 0 ];
+            self.width = self.container.getBoundingClientRect().width || self.container.offsetWidth;
             
             // se comienza a configurar el layout para el slider
-            this.container.style.visibility = 'visible';
-            this.slider.style.width = (this.slides.length * this.width) + 'px';
+            self.container.style.visibility = 'visible';
+            self.slider.style.width = (self.slides.length * self.width) + 'px';
             
             // se setean los estilos para los slides
-            var pos = this.slides.length,
+            var pos = self.slides.length,
                 slide;
         
             while( pos-- ){
-                slide = this.slides[ pos ];
+                slide = self.slides[ pos ];
                 
-                slide.style.width = this.width + 'px';
+                slide.style.width = self.width + 'px';
                 slide.setAttribute('data-index', pos);
                 
-                if (this.browserCheck.transitions) {
-                    slide.style.left = (pos * -this.width) + 'px';
-                    this.move(pos, this.currentIndex > pos ? -this.width : (this.currentIndex < pos ? this.width : 0), 0);
+                if (self.browserCheck.transitions) {
+                    slide.style.left = (pos * -self.width) + 'px';
+                    self.move(pos, self.currentIndex > pos ? -self.width : (self.currentIndex < pos ? self.width : 0), 0);
+                }
+                else {
+                    slide.style.float = 'left';
                 }
             }
             
-            if (!this.browserCheck.transitions) { this.slider.style.left = (this.currentIndex * -this.width) + 'px'; }
+            // if (!self.browserCheck.transitions) { self.slider.style.left = (self.currentIndex * -self.width) + 'px'; }
             
             // se manejan los eventos
-            if( this.browserCheck.addEventListener ){ this.eventsHandler( 'listen' ); }
+            if( self.browserCheck.addEventListener ){ self.eventsHandler( 'listen' ); }
             else { window.onresize = function(){ setTimeout(function(){ self.setup(); }, 0); }; }
             
-            if( self.settings.onSetupCallback ){ self.settings.onSetupCallback( this.slider, this.slides  ); }
+            if( self.settings.onSetupCallback ){ self.settings.onSetupCallback( self.slider, self.slides  ); }
         },
         kill : function(){
             // se detiene el intervalo
@@ -317,45 +343,73 @@
             var style = slide && slide.style;
             
             if( !style ){ return; }
-            
-            style.webkitTransitionDuration = 
-            style.MozTransitionDuration = 
-            style.msTransitionDuration = 
-            style.OTransitionDuration = 
-            style.transitionDuration = velocidad + 'ms';
-    
-            style.webkitTransform = 'translate(' + distancia + 'px,0)' + 'translateZ(0)';
-            style.msTransform = 
-            style.MozTransform = 
-            style.OTransform =
-            style.transform = 'translateX(' + distancia + 'px)';
+
+            if( self.browserCheck.transitions ){
+                style.webkitTransitionDuration = 
+                style.MozTransitionDuration = 
+                style.msTransitionDuration = 
+                style.OTransitionDuration = 
+                style.transitionDuration = velocidad + 'ms';
+        
+                style.webkitTransform = 'translate(' + distancia + 'px,0)' + 'translateZ(0)';
+                style.msTransform = 
+                style.MozTransform = 
+                style.OTransform =
+                style.transform = 'translateX(' + distancia + 'px)';
+            }
+            else if( self.browserCheck.ie9mobile ){
+                self.slider.style.msTransform = 
+                self.slider.style.transform = 'translateX(' + distancia + 'px)';
+            }
+            // else {
+            //     self.slider.style.left = distancia + 'px';
+            // }
             
         },
         animate : function( from, to, speed ){
             var self = this;
     
             if( !speed ){
-                self.slider.style.left = to + 'px';
+                if( self.browserCheck.ie9mobile ){
+                    style.msTransform = 
+                    style.transform = 'translateX(' + to + 'px)';
+                } else {
+                    self.slider.style.left = to + 'px';
+                }
                 return;
             }
             
             // funcion de animación, usa requestanimationframe para mejorar el performance en mobile
-            var start = +new Date,
+            var start,
                 rafID,
                 animation = function(){
-                    var timeElap = +new Date - start;
+                    var timeElap = +new Date - start,
+                        distancia = (( (to - from) * (Math.floor((timeElap / speed) * 100) / 100) ) + from);
                     
+                    // i hate IE
                     if (timeElap > speed) {
-                        self.slider.style.left = to + 'px';
+                        if( self.browserCheck.ie9mobile ){
+                            self.slider.style.msTransform = 
+                            self.slider.style.transform = 'translateX(' + to + 'px)';
+                        } else {
+                            self.slider.style.left = to + 'px';
+                        }
                         window.cancelAnimationFrame( rafID );
                         return;
                     }
                     
-                    self.slider.style.left = (( (to - from) * (Math.floor((timeElap / speed) * 100) / 100) ) + from) + 'px';
+                    if( self.browserCheck.ie9mobile ){
+                        self.slider.style.msTransform = 
+                        self.slider.style.transform = 'translateX(' + distancia + 'px)';
+                    } else {
+                        self.slider.style.left = distancia + 'px';
+                    }
+                    
                     rafID = window.requestAnimationFrame( animation );
                 };
                 
             // se ejecuta la animacion
+            start = +new Date;
             animation();
             
         },
