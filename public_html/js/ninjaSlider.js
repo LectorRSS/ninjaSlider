@@ -197,7 +197,6 @@
                             self.animate( delta.x - (self.currentIndex * self.width), self.currentIndex * self.width * -1, self.settings.speed );
                         }
                     }
-                    console.log(self.currentIndex);
                 }
 
                 self.slider.removeEventListener('touchmove', self.events, false);
@@ -218,14 +217,15 @@
         this.setup();
         
         //si es autmatico se empieza
-        // if( this.settings.auto ){ this.begin(); }
+        if( this.settings.auto ){ this.begin(); }
         
         return {
             setup : function(){ self.setup(); },
             kill : function(){ self.kill(); },
             prev : function(){ self.prev(); },
             next : function(){ self.next(); },
-            slide : function( to, slideSpeed ){ self.slide( to, slideSpeed ); }
+            slide : function( to, slideSpeed ){ self.slide( to, slideSpeed ); },
+            stop : function(){ self.stop(); }
         };
     };
     
@@ -261,7 +261,7 @@
                 }
             }
             
-            // if (!self.browserCheck.transitions) { self.slider.style.left = (self.currentIndex * -self.width) + 'px'; }
+            if (!self.browserCheck.transitions) { self.slider.style.position = 'relative'; }
             
             // se manejan los eventos
             if( self.browserCheck.addEventListener ){ self.eventsHandler( 'listen' ); }
@@ -361,9 +361,9 @@
                 self.slider.style.msTransform = 
                 self.slider.style.transform = 'translateX(' + distancia + 'px)';
             }
-            // else {
-            //     self.slider.style.left = distancia + 'px';
-            // }
+            else {
+                self.slider.style.left = distancia + 'px';
+            }
             
         },
         animate : function( from, to, speed ){

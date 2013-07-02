@@ -1,0 +1,539 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"ma",
+				"margin-top"
+			],
+			[
+				"pad",
+				"padding"
+			],
+			[
+				"font-s",
+				"font-style"
+			],
+			[
+				"marg",
+				"margin-top"
+			],
+			[
+				"in",
+				"intro-paragraph"
+			],
+			[
+				"te",
+				"text-align"
+			],
+			[
+				"bac",
+				"background"
+			],
+			[
+				"tex",
+				"text-transform"
+			],
+			[
+				"box",
+				"box-shadow"
+			],
+			[
+				"lin-",
+				"line-texture"
+			],
+			[
+				"pre",
+				"preventDefault	jsEvent"
+			],
+			[
+				"margin",
+				"margin-bottom"
+			],
+			[
+				"text",
+				"text-transform"
+			],
+			[
+				"sim",
+				"simple-unit-thumbnail"
+			],
+			[
+				"mar",
+				"margin-right"
+			],
+			[
+				"ar",
+				"article	Tag"
+			],
+			[
+				"b",
+				"button	Tag"
+			],
+			[
+				"inl",
+				"inline-block"
+			],
+			[
+				"wi",
+				"width"
+			],
+			[
+				"font-",
+				"font-size"
+			],
+			[
+				"margn",
+				"margin-bottom"
+			],
+			[
+				"block",
+				"block-icon"
+			],
+			[
+				"paddi",
+				"padding-top"
+			],
+			[
+				"ba",
+				"background"
+			],
+			[
+				"text-",
+				"text-transform"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"vid",
+				"visited"
+			],
+			[
+				"di",
+				"display"
+			],
+			[
+				"l",
+				"line-height"
+			],
+			[
+				"ta",
+				"table-cell"
+			],
+			[
+				"d",
+				"display"
+			],
+			[
+				"pa",
+				"padding"
+			],
+			[
+				"padi",
+				"padding-left"
+			],
+			[
+				"dropdown",
+				"dropdown-menu"
+			],
+			[
+				"u",
+				"ul	Tag"
+			],
+			[
+				"a",
+				"a	Tag"
+			],
+			[
+				"se",
+				"section	Tag"
+			],
+			[
+				"j",
+				"jQuery	jQuery"
+			],
+			[
+				"pro",
+				"prototype	jsProp"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "Packages/JSLint/JSLint.sublime-build",
+	"command_palette":
+	{
+		"height": 173.0,
+		"selected_items":
+		[
+			[
+				"syntax ja",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"syntax ht",
+				"Set Syntax: HTML5"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"html5",
+				"Set Syntax: HTML5"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 416.0
+	},
+	"console":
+	{
+		"height": 125.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/C/Users/NaNotebook-Ida/Downloads/ninjaSlider.js",
+		"/D/Webs/CDEC/front/index.html",
+		"/D/Webs/CDEC/front/noticia-single.html",
+		"/D/Webs/CDEC/front/404.html",
+		"/D/Webs/CDEC/front/css/boxsizing.htc",
+		"/D/Webs/CDEC/front/css/style.css",
+		"/D/Webs/CDEC/front/js/libs/validizr.js",
+		"/D/Webs/CDEC/front/contacto.html",
+		"/D/Webs/CDEC/front/js/mainScript.js",
+		"/C/Users/NaNotebook-Ida/Documents/GitHub/validizr/validizr.js",
+		"/D/Webs/CDEC/front/js/libs/validizr.min.js",
+		"/D/Webs/CDEC/front/trabaja-con-nosotros.html",
+		"/D/Webs/CDEC/front/sobre-cdec.html",
+		"/D/Webs/CDEC/front/sala-de-prensa.html",
+		"/D/Webs/CDEC/front/resultado-busqueda.html",
+		"/D/Webs/CDEC/front/quienes-somos.html",
+		"/D/Webs/CDEC/front/pagina-tipo.html",
+		"/D/Webs/CDEC/front/normas.html",
+		"/D/Webs/CDEC/front/listas-especiales.html",
+		"/D/Webs/CDEC/front/licitaciones.html",
+		"/D/Webs/CDEC/front/informes-y-documentos.html",
+		"/D/Webs/CDEC/front/ficha-single.html",
+		"/D/Webs/CDEC/front/contingencia.html",
+		"/D/Webs/CDEC/front/categoria.html",
+		"/D/Webs/CDEC/front/busqueda-basica.html",
+		"/D/Webs/CDEC/front/js/libs/ninjaSlider.js",
+		"/D/Webs/CDEC/front/js/libs/media.match.min.js",
+		"/D/Webs/CDEC/front/js/libs/jquery.sparkline.min.js",
+		"/C/Users/NaNotebook-Ida/Desktop/Highcharts-3.0.2/examples/column-basic/index.htm",
+		"/C/Users/NaNotebook-Ida/Desktop/Highcharts-3.0.2/examples/combo-dual-axes/index.htm",
+		"/C/Users/NaNotebook-Ida/Desktop/Highcharts-3.0.2/examples/bar-basic/index.htm",
+		"/D/Webs/CDEC/front/js/libs/highcharts.js",
+		"/D/Webs/CDEC/front/css/ui/blockquote-bg.svg",
+		"/D/Webs/CDEC/front/css/ui/blockquote-bg.png",
+		"/D/Webs/CDEC/front/email.html",
+		"/D/Webs/CDEC/front/newsletter.html",
+		"/C/Users/NANOTE~1/AppData/Local/Temp/Rar$DRa0.662/index.html",
+		"/C/Users/NANOTE~1/AppData/Local/Temp/Rar$DRa0.652/index.html",
+		"/C/Users/NANOTE~1/AppData/Local/Temp/Rar$DRa0.928/index.html",
+		"/D/Webs/CDEC/front/css/style.min.css",
+		"/D/Webs/CDEC/front/lightbox-template.html",
+		"/C/Users/NaNotebook-Ida/Documents/GitHub/input-beautifier/public_html/js/beautifier.js",
+		"/D/Webs/CDEC/front/js/libs/input.beautifier.min.js",
+		"/C/Users/NaNotebook-Ida/Documents/GitHub/input-beautifier/public_html/js/beautifier.min.js",
+		"/D/Webs/CDEC/front/js/libs/jquery.raf.min.js",
+		"/C/Users/NaNotebook-Ida/Documents/GitHub/jquery-requestAnimationFrame/src/jquery.requestAnimationFrame.js",
+		"/D/Webs/CDEC/front/lightbox-template",
+		"/D/Webs/CDEC/front/busqueda-basica",
+		"/D/Webs/CDEC/wp-includes/link-template.php",
+		"/D/Webs/CDEC/wp-includes/post-template.php",
+		"/D/Webs/CDEC/front/404",
+		"/C/Users/NaNotebook-Ida/AppData/Roaming/Sublime Text 2/Packages/Default/Default (Windows).sublime-keymap",
+		"/D/Webs/CDEC/sftp-config.json",
+		"/D/Webs/CDEC/front/sftp-config.json",
+		"/C/Users/NaNotebook-Ida/Dropbox/Public/cdec/index.html",
+		"/C/Users/NaNotebook-Ida/Dropbox/Public/cdec/css/style.css",
+		"/C/Users/NaNotebook-Ida/Dropbox/Public/cdec/js/libs/ninjaSlider.js",
+		"/C/Users/NaNotebook-Ida/Dropbox/Public/cdec/js/mainScript.js",
+		"/C/Users/NaNotebook-Ida/Documents/GitHub/ninjaSlider/public_html/js/ninjaSlider.js",
+		"/C/Users/NaNotebook-Ida/Dropbox/Public/cdec/js/libs/ninjaSlider",
+		"/C/Users/NaNotebook-Ida/AppData/Roaming/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/C/Users/NaNotebook-Ida/AppData/Roaming/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
+		"/C/Users/NaNotebook-Ida/Dropbox/Public/cdec/css/ui/dropdown-arrow.svg",
+		"/D/Webs/clientebancario/css/img/ribbon.svg",
+		"/C/Users/NaNotebook-Ida/Dropbox/Public/cdec/css/fonts/stylesheet.css",
+		"/C/Users/NaNotebook-Ida/Dropbox/Public/cdec/imagenes/mapa-sic.png",
+		"/C/Users/NaNotebook-Ida/AppData/Roaming/Sublime Text 2/Packages/User/Default (Windows).sublime-keymap",
+		"/C/Users/NaNotebook-Ida/Dropbox/Public/cdec/js/libs/selectivizr.min",
+		"/C/Users/NANOTE~1/AppData/Local/Temp/Rar$DRa0.246/selectivizr-min.js",
+		"/C/Users/NaNotebook-Ida/Dropbox/Public/cdec/js/libs/modernizr.min.js",
+		"/C/Users/NaNotebook-Ida/Dropbox/Public/cdec/js/script.js",
+		"/D/Webs/clientebancario/index.html",
+		"/D/Webs/Australis-Seafoods/wp-content/themes/australis/meta-header.php",
+		"/D/Webs/EQP/wp-content/themes/eqpmobile/functions.php"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"#main-header",
+			"#main-header.",
+			"#main-header",
+			"<form",
+			"regular-form",
+			"form ",
+			"form",
+			"<form",
+			"animate",
+			"alert",
+			"animate",
+			"alert",
+			"next",
+			"begin",
+			"translate(",
+			"translate()",
+			"tanslate()",
+			"30,45,20,11,34, 60,70,32,12,5,80,43",
+			"<img class=\"graphic-table-spark\" src=\"imagenes/sparkline-test.png\">",
+			"graphic-table-spark",
+			".contingencia",
+			".no-svg",
+			".pretty-select",
+			"content-body",
+			".regular-form",
+			"logo",
+			"top-bar",
+			"ececec",
+			"0px",
+			"blue-btn",
+			"postulacion_pretenciones",
+			"postulacion_subject",
+			"contacto",
+			"action-btn",
+			"lightbox",
+			"accordeon",
+			"form",
+			"tablets",
+			"general",
+			"thumbnail",
+			"novedades",
+			"both",
+			"Publicaciones",
+			"publi",
+			"action",
+			"<span class=\"simple permalink\">",
+			"svgFallback",
+			"-form",
+			"form",
+			"action-btn small-btn blue-btn rapid-access",
+			".main-section-title",
+			"fold",
+			"uppercase",
+			"uppercase-text",
+			"banner",
+			"complex-unit",
+			" .",
+			"big-btn",
+			"Ir a Informes y documentos",
+			"Ir a Informes y Documentos",
+			"Ir a Informes y documentos",
+			"Ir a Informes y Documentos",
+			"Ir a Informes y documentos",
+			"Ir a Informes y Documentos",
+			"Ir a Informes y documentos",
+			"Ir a Informes y Documentos",
+			"Ir a Informes y documentos",
+			"Ir a Informes y Documentos",
+			"sitiop",
+			".hide-on-desktops { display: inherit; visibility: visible; }\n.hide-on-tablets { display: inherit; visibility: visible; }\n.hide-on-phones { display: none !important; visibility: hidden !important; }\n.only-on-desktop { display: none !important; visibility: hidden !important; }\n.only-on-tablets { display: none !important; visibility: hidden !important; }\n",
+			"indent",
+			"responsive",
+			"width",
+			"Amble",
+			">\n",
+			"article",
+			"Ver gráficos de cotas",
+			"unit-icon-info",
+			"line",
+			"Facebook",
+			"icon-replacement",
+			"Ver más documentos",
+			">\n",
+			"expand_selection",
+			"src=\"\"",
+			"complex unit-status",
+			"complex unit-meta",
+			"simple unit-meta",
+			"<h2>",
+			"h2",
+			"main",
+			"novedades",
+			"complex unit-icon",
+			"complex unit-status",
+			"indent",
+			"simple-unit-desc",
+			"simple-unit-meta",
+			"simple",
+			"simple-unit-meta",
+			"active",
+			"a",
+			"active",
+			"hola",
+			"li",
+			"1",
+			"meta",
+			"/*******************************************************************************",
+			"scr=",
+			"scr",
+			"cdecSic",
+			"/.",
+			"script",
+			">\n",
+			"\">|\n",
+			">\n",
+			"script",
+			">\n"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 34.0
+	},
+	"input":
+	{
+		"height": 35.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 118.0
+	},
+	"output.jslint_result_view":
+	{
+		"height": 124.0
+	},
+	"output.sftp":
+	{
+		"height": 124.0
+	},
+	"replace":
+	{
+		"height": 62.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"stye",
+				"front/css/style.css"
+			],
+			[
+				"style",
+				"css/style.css"
+			],
+			[
+				"sty",
+				"css/style.css"
+			],
+			[
+				"inde",
+				"index.html"
+			],
+			[
+				"",
+				"css/style.css"
+			],
+			[
+				"script",
+				"js/mainScript.js"
+			],
+			[
+				"scrip",
+				"js/script.js"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 309.0,
+	"status_bar_visible": true
+}
