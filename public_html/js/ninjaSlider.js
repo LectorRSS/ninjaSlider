@@ -240,6 +240,16 @@
             
             // se comienza a configurar el layout para el slider
             self.container.style.visibility = 'visible';
+            self.container.style.webkitBackfaceVisibility = 
+            self.container.style.mozBackfaceVisibility = 
+            self.container.style.msBackfaceVisibility = 
+            self.container.style.backfaceVisibility = 'hidden';
+
+            self.container.style.webkitPerspective = 
+            self.container.style.mozPerspective = 
+            self.container.style.msPerspective = 
+            self.container.style.perspective = 1000;
+
             self.slider.style.width = (self.slides.length * self.width) + 'px';
             
             // se setean los estilos para los slides
@@ -251,6 +261,7 @@
                 
                 slide.style.width = self.width + 'px';
                 slide.setAttribute('data-index', pos);
+                slide.style.position = 'relative';
                 
                 if (self.browserCheck.transitions) {
                     slide.style.left = (pos * -self.width) + 'px';
@@ -351,11 +362,11 @@
                 style.OTransitionDuration = 
                 style.transitionDuration = velocidad + 'ms';
         
-                style.webkitTransform = 'translate(' + distancia + 'px,0)' + 'translateZ(0)';
+                style.webkitTransform = 
                 style.msTransform = 
                 style.MozTransform = 
                 style.OTransform =
-                style.transform = 'translateX(' + distancia + 'px)';
+                style.transform = 'translate(' + distancia + 'px,0) translateZ(0)';
             }
             else if( self.browserCheck.ie9mobile ){
                 self.slider.style.msTransform = 
@@ -466,8 +477,5 @@
             return original;
         }
     };
-    
-    if( !!window.addEventListener ){ document.addEventListener('DOMContentLoaded', function(){ window.testSlider = new NinjaSlider('slider'); }, false); }
-    else { window.onload = function(){ window.testSlider = new NinjaSlider('slider'); }; }
     
 }(this, document));
