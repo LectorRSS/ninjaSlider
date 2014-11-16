@@ -15,9 +15,14 @@
         <meta http-equiv="cleartype" content="on">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/main.css">
         
-        <script src="js/ninjaSlider.js"></script>
+        <script src="js/v2.js"></script>
+        <script>
+            window.onload = function(){
+                var slider = new NinjaSlider( document.getElementById('slider') );
+            };
+        </script>
     </head>
     <body>
         <div id="container" >

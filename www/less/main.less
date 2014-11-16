@@ -1,3 +1,4 @@
+
 /*******************************************************************************
 Normalizador *******************************************************************
 *******************************************************************************/
@@ -22,7 +23,7 @@ only screen and (                min-resolution: 2dppx) {
     box-shadow: inset 0px 0px 16px 0px rgba(0, 0, 0, 0.4);
     background: rgba(0,0,0,0.2);
 }
-#container::before, #container::after {
+/*#container::before, #container::after {
     content: "";
     display: block;
     position: absolute;
@@ -48,7 +49,7 @@ only screen and (                min-resolution: 2dppx) {
     background: -o-linear-gradient(left, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%);
     background: -ms-linear-gradient(left, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%);
     background: linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%);
-}
+}*/
 #slider {
     margin: 20px 0;
     -webkit-transform: translate3d(0,0,0);
@@ -56,6 +57,7 @@ only screen and (                min-resolution: 2dppx) {
     -ms-transform: translate3d(0,0,0);
     -o-transform: translate3d(0,0,0);
     transform: translate3d(0,0,0);
+    counter-reset: section;
 }
 #slider ul {
     list-style: none;
@@ -69,6 +71,21 @@ only screen and (                min-resolution: 2dppx) {
     float: left;
     width: 100%;
     position: relative;
+    counter-increment: section;
+}
+#slider li:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    content: counter(section);
+    font-size: 2em;
+    color: #fff;
+    line-height: 2em;
+    left: 0;
+    top: 50%;
+    margin-top: -1em;
+    text-align: center;
 }
 .slide-content { padding: 0 10%; }
 #slider img {

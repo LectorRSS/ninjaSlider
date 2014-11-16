@@ -1,5 +1,5 @@
 // ninjaSlider, responsive slider plugin based on the work made by
-(function(window, document, undefined){
+(function(window, document, $, undefined){
     "use strict";
     
     //este es un polylfill para poder usar window.requestAnimationFrame 
@@ -21,6 +21,7 @@
             stopPropagation : false,
             disableScroll : false,
             auto : 1000,
+            freeMode : true,
             transitionCallback : undefined,
             onInputMoveCallback : undefined,
             onInputStartCallback : undefined,
@@ -186,7 +187,7 @@
 
                         }
                         
-                        if( self.settings.transitionCallback ){ self.settings.transitionCallback( self.currentIndex, self.slides[ self.currentIndex ] ); }
+                        if( self.settings.transitionCallback ){ self.settings.transitionCallback( self.currentIndex, self.slides[ self.currentIndex ], self.container ); }
                         
                     } else {
                         if( self.browserCheck.transitions ){
@@ -197,7 +198,6 @@
                             self.animate( delta.x - (self.currentIndex * self.width), self.currentIndex * self.width * -1, self.settings.speed );
                         }
                     }
-                    console.log(self.currentIndex);
                 }
 
                 self.slider.removeEventListener('touchmove', self.events, false);
@@ -209,7 +209,7 @@
             },
             transitionEnd : function( event ){
                 if (parseInt(event.target.getAttribute('data-index'), 10) === self.currentIndex && self.settings.transitionCallback) {
-                    self.settings.transitionCallback( self.currentIndex, self.slides[ self.currentIndex ] );
+                    self.settings.transitionCallback( self.currentIndex, self.slides[ self.currentIndex ], self.container );
                 }
             }
         };
@@ -218,14 +218,15 @@
         this.setup();
         
         //si es autmatico se empieza
-        // if( this.settings.auto ){ this.begin(); }
+        if( this.settings.auto ){ this.begin(); }
         
         return {
             setup : function(){ self.setup(); },
             kill : function(){ self.kill(); },
             prev : function(){ self.prev(); },
             next : function(){ self.next(); },
-            slide : function( to, slideSpeed ){ self.slide( to, slideSpeed ); }
+            slide : function( to, slideSpeed ){ self.slide( to, slideSpeed ); },
+            stop : function(){ self.stop(); }
         };
     };
     
@@ -240,6 +241,16 @@
             
             // se comienza a configurar el layout para el slider
             self.container.style.visibility = 'visible';
+            self.container.style.webkitBackfaceVisibility = 
+            self.container.style.mozBackfaceVisibility = 
+            self.container.style.msBackfaceVisibility = 
+            self.container.style.backfaceVisibility = 'hidden';
+
+            self.container.style.webkitPerspective = 
+            self.container.style.mozPerspective = 
+            self.container.style.msPerspective = 
+            self.container.style.perspective = 1000;
+
             self.slider.style.width = (self.slides.length * self.width) + 'px';
             
             // se setean los estilos para los slides
@@ -251,6 +262,7 @@
                 
                 slide.style.width = self.width + 'px';
                 slide.setAttribute('data-index', pos);
+                slide.style.position = 'relative';
                 
                 if (self.browserCheck.transitions) {
                     slide.style.left = (pos * -self.width) + 'px';
@@ -261,7 +273,7 @@
                 }
             }
             
-            // if (!self.browserCheck.transitions) { self.slider.style.left = (self.currentIndex * -self.width) + 'px'; }
+            if (!self.browserCheck.transitions) { self.slider.style.position = 'relative'; }
             
             // se manejan los eventos
             if( self.browserCheck.addEventListener ){ self.eventsHandler( 'listen' ); }
@@ -294,7 +306,7 @@
             if( self.settings.onKillCallback ){ self.settings.onKillCallback( this.slider, this.slides  ); }
         },
         prev : function(){
-            if ( this.currentIndex ){ slide(this.currentIndex-1); }
+            if ( this.currentIndex ){ this.slide(this.currentIndex-1); }
             else if ( this.settings.continuous ){ this.slide(this.slides.length-1); }
         },
         next : function(){
@@ -324,8 +336,10 @@
             var self = this;
             this.interval = setInterval(function(){
                 self.next();
-                if( self.settings.transitionCallback ){ self.settings.transitionCallback( self.currentIndex, self.slides[ self.currentIndex ] ); }
+                if( self.settings.transitionCallback ){ self.settings.transitionCallback( self.currentIndex, self.slides[ self.currentIndex ], self.container ); }
             }, this.settings.auto);
+
+
         },
         stop : function(){
             this.settings.auto = 0;
@@ -351,19 +365,19 @@
                 style.OTransitionDuration = 
                 style.transitionDuration = velocidad + 'ms';
         
-                style.webkitTransform = 'translate(' + distancia + 'px,0)' + 'translateZ(0)';
+                style.webkitTransform = 
                 style.msTransform = 
                 style.MozTransform = 
                 style.OTransform =
-                style.transform = 'translateX(' + distancia + 'px)';
+                style.transform = 'translate(' + distancia + 'px,0) translateZ(0)';
             }
             else if( self.browserCheck.ie9mobile ){
                 self.slider.style.msTransform = 
                 self.slider.style.transform = 'translateX(' + distancia + 'px)';
             }
-            // else {
-            //     self.slider.style.left = distancia + 'px';
-            // }
+            else {
+                self.slider.style.left = distancia + 'px';
+            }
             
         },
         animate : function( from, to, speed ){
@@ -395,6 +409,7 @@
                             self.slider.style.left = to + 'px';
                         }
                         window.cancelAnimationFrame( rafID );
+                        if( self.settings.transitionCallback ){ self.settings.transitionCallback( self.currentIndex, self.slides[ self.currentIndex ], self.container ); }
                         return;
                     }
                     
@@ -417,13 +432,15 @@
             var self = this;
             
             if( action === 'listen' ){
-                self.slider.addEventListener('touchstart', self.events, false);
-                self.slider.addEventListener('MSPointerDown', self.events, false);
-                self.slider.addEventListener('mousedown', self.events, false);
+                if( self.settings.freeMode ){
+                    self.slider.addEventListener('touchstart', self.events, false);
+                    self.slider.addEventListener('MSPointerDown', self.events, false);
+                    self.slider.addEventListener('mousedown', self.events, false);
+                    self.slider.setAttribute('data-pointersHandled', 'true');
+                }
+                
                 
                 window.addEventListener('resize', self.events, false);
-
-                self.slider.setAttribute('data-pointersHandled', 'true');
 
                 if ( self.browserCheck.transitions ) {
                     self.slider.addEventListener('webkitTransitionEnd', self.events, false);
@@ -434,14 +451,20 @@
 
                     self.slider.setAttribute('data-transitionsHandled', 'true');
                 }
+
+                self.container.addEventListener('mouseover', function(){
+                    clearInterval( self.interval );
+                }, false);
             } else {
-                self.slider.removeEventListener('touchstart', self.events, false);
-                self.slider.removeEventListener('MSPointerDown', self.events, false);
-                self.slider.removeEventListener('mousedown', self.events, false);
+                if( self.settings.freeMode ){
+                    self.slider.removeEventListener('touchstart', self.events, false);
+                    self.slider.removeEventListener('MSPointerDown', self.events, false);
+                    self.slider.removeEventListener('mousedown', self.events, false);
+                    self.slider.setAttribute('data-pointersHandled', 'false');
+                }
                 
                 window.removeEventListener('resize', self.events, false);
 
-                self.slider.setAttribute('data-pointersHandled', 'false');
 
                 if ( self.browserCheck.transitions ) {
                     self.slider.removeEventListener('webkitTransitionEnd', self.events, false);
@@ -466,8 +489,11 @@
             return original;
         }
     };
+
+    $.fn.ninjaSlider = function( options ){
+        return this.each(function(){
+            $(this).data('ninjaSlider', (new window.NinjaSlider( this, options )));
+        });
+    }
     
-    if( !!window.addEventListener ){ document.addEventListener('DOMContentLoaded', function(){ window.testSlider = new NinjaSlider('slider'); }, false); }
-    else { window.onload = function(){ window.testSlider = new NinjaSlider('slider'); }; }
-    
-}(this, document));
+}(this, document, jQuery));
