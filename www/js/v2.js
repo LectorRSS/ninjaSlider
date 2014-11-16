@@ -293,8 +293,6 @@
         effects : {}
     };
 
-    NinjaSlider.prototype.effects = window.NinjaSlider
-
     NinjaSlider.prototype.effects.slide = {
         setup : function(){
             this.container.style.visibility = 'visible';
