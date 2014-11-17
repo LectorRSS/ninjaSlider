@@ -71,7 +71,8 @@
         this.defaults = {
             auto : 2000,
             speed : 300,
-            effect : 'slide'
+            effect : 'slide',
+            handleKeys : true
             // transitionCallback : function( index, item, slider ){},
         };
         this.settings = this.extend( this.defaults, (options || {}) );
@@ -130,8 +131,22 @@
 
             if( this.settings.auto ){
                 this.stopAuto = function(){
-                    clearInterval( this.interval );
+                    if( this.interval ){
+                        clearInterval( this.interval );
+                        this.interval = undefined;
+                    }
                     this.bulkRemoveListeners( this.container, ['mousedown', 'touchstart'], this.stopAuto );
+                }.bind( this );
+            }
+
+            if( this.settings.handleKeys ){
+                this.onKeyDown = function( event ){
+                    if( this.interval ){
+                        clearInterval( this.interval );
+                        this.interval = undefined;
+                    }
+                    if( event.keyCode == '39' ){ this.next(); }
+                    else if( event.keyCode == '37' ){ this.prev(); }
                 }.bind( this );
             }
         },
@@ -140,11 +155,13 @@
                 this.bulkAddListeners( this.container, ['touchstart', 'mousedown'], this.start );
                 this.bulkAddListeners( this.container, ['mousedown', 'touchstart'], this.stopAuto );
                 window.addEventListener( 'resize', this.resize );
+                if( this.settings.handleKeys ){ document.addEventListener( 'keydown', this.onKeyDown ); }
             }
             else {
                 this.bulkRemoveListeners( this.container, ['touchstart', 'mousedown'], this.start );
                 this.bulkRemoveListeners( this.container, ['mousedown', 'touchstart'], this.stopAuto );
                 window.removeEventListener( 'resize', this.resize );
+                if( this.settings.handleKeys ){ document.removeEventListener( 'keydown', this.onKeyDown ); }
             }
         },
         prev : function(){
@@ -316,7 +333,7 @@
             }.bind( this ));
 
             if( this.initialized ){
-                this.slide( this.currentIndex, 0 );
+                this.effects.slide.slide.bind( this.currentIndex, 0 );
             }
 
             this.initialized = true;
@@ -396,14 +413,7 @@
         // onStart : function(){},
         // onEnd : function(){}
     };
-
-    NinjaSlider.prototype.effects.oldie = {
-        setup : function(){},
-        kill : function(){},
-        slide : function( to, time ){},
-        translate : function( index, offset, velocity ){},
-    };
-
+    
     window.NinjaSlider = NinjaSlider;
 
     if( $ ){
